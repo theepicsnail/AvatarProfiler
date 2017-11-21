@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using VRC.Core;
 
 [CustomEditor(typeof(VRCSDK2.VRC_AvatarDescriptor))]
-public class AvatarProfiler : Editor {
-    
+public class AvatarProfiler : AvatarDescriptorEditor
+{
+
     private ProfilerResult result = null;
     public void OnEnable()
     {

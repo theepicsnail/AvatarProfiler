@@ -33,10 +33,10 @@ public class AvatarProfiler : AvatarDescriptorEditor
         
         private void profile(Transform root)
         {
-            foreach (Renderer renderer in root.GetComponents<Renderer>())
+            foreach (SkinnedMeshRenderer renderer in root.GetComponents<SkinnedMeshRenderer>())
             {
                 renderers++;
-                materials += renderer.materials.Length;
+                materials += renderer.sharedMaterials.Length;
             }
 
             foreach (DynamicBone bone in root.GetComponents<DynamicBone>())
@@ -61,17 +61,17 @@ public class AvatarProfiler : AvatarDescriptorEditor
             HashSet<Transform> excludes = new HashSet<Transform>();
             excludes.UnionWith(bone.m_Exclusions);
 
-            bones += countNodes(root, excludes);
+            bones += countBones(root, excludes);
         }
 
-        private int countNodes(Transform root, HashSet<Transform> excludes)
+        private int countBones(Transform root, HashSet<Transform> excludes)
         {
             if (excludes.Contains(root)) return 0;
 
             int res = 1;
             foreach (Transform child in root)
             {
-                res += countNodes(child, excludes);
+                res += countBones(child, excludes);
             }
 
             return res;
